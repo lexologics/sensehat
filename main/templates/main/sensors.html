@@ -5,11 +5,11 @@
     <h1>Raspberry Pi 3B+ CPU Sensors</h1>
     {% if temp > 37.25 %}
       <h3> 
-      <p class="text-danger">Celsius: {{ temp|floatformat:2 }}</p>
+      <p class="text-danger">Celsius: {{ temp|floatformat:3 }}</p>
       </h3>
     {% else %}
       <h3>
-      <p class="text-success">Celsius: {{ temp|floatformat:2 }}</p>
+      <p class="text-success">Celsius: {{ temp|floatformat:3 }}</p>
       </h3>
     {% endif %}
 
@@ -18,7 +18,7 @@
     <p>{{ sense.temp }}</p>
 -->
 
-    <p class="text-muted">Pressure: {{ pressure|floatformat:0 }}</p>
+    <p class="text-muted">Pressure: {{ pressure|floatformat:2 }}</p>
     <p class="text-muted">Humidity: {{ humidity|floatformat:1 }}</p>
 
     <i>(refreshing every 2 seconds)</i>
