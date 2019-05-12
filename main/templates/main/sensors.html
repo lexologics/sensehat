@@ -1,0 +1,27 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+    <h1>Raspberry Pi 3B+ CPU Heat</h1>
+    {% if temp > 37.25 %}
+      <h3> 
+      <p class="text-danger">Celsius: {{ temp|floatformat:2 }}</p>
+      </h2>
+    {% else %}
+      <h3>
+      <p class="text-success">Celsius: {{ temp|floatformat:2 }}</p>
+      </h3>
+    {% endif %}
+    </h3>
+<!--    
+    <p>Sensor: {{ sense.temperature }}</p>
+    <p>{{ sense.temp }}</p>
+-->
+    <i>(refreshing every 2 seconds)</i>
+
+    <br><br>
+    <hr>
+    <a href="/rgb/">When you click here, my RGB LEDs will be on and I know you clicked :)</a>
+    <hr>
+    
+{% endblock %}
