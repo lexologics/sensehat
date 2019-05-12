@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h1>Raspberry Pi 3B+ CPU Heat</h1>
+    <h1>Raspberry Pi 3B+ CPU Sensors</h1>
     {% if temp > 37.25 %}
       <h3> 
       <p class="text-danger">Celsius: {{ temp|floatformat:2 }}</p>
@@ -18,14 +18,15 @@
     <p>{{ sense.temp }}</p>
 -->
 
-    <p class="text-info">Pressure: {{ pressure|floatformat:2 }}</p>
-    <p class="text-info">Humidity: {{ humidity|floatformat:2 }}</p>
+    <p class="text-muted">Pressure: {{ pressure|floatformat:0 }}</p>
+    <p class="text-muted">Humidity: {{ humidity|floatformat:1 }}</p>
 
     <i>(refreshing every 2 seconds)</i>
 
     <br><br>
     <hr>
-    <a href="/rgb/">When you click here, my RGB LEDs will be on and I know you clicked :)</a>
+    Click to let me know 
+    <a href="/rgb/">:)</a>
     <hr>
     
 {% endblock %}
