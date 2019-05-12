@@ -38,12 +38,14 @@ PET2 = [
 def homepage(request):
     return render(request, 'main/home.html')
 
-def temperature(request):
+def sensors(request):
 
     from sense_hat import SenseHat
 
     sense = SenseHat()
     temp = sense.get_temperature()
+    pressure = sense.get_pressure()
+    humidity = sense.get_humidity()
     #print("Temperature: %s C" % temp)
 
     # alternatives
@@ -53,6 +55,8 @@ def temperature(request):
     context = {
         'temp': temp,
         'sense': sense,
+        'pressure': pressure,
+        'humidity': humidity,
         'title': 'Temperature'
         }
     return render(request, 'main/sensors.html', context)

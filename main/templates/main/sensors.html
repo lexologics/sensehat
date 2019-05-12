@@ -12,11 +12,15 @@
       <p class="text-success">Celsius: {{ temp|floatformat:2 }}</p>
       </h3>
     {% endif %}
-    </h3>
+
 <!--    
     <p>Sensor: {{ sense.temperature }}</p>
     <p>{{ sense.temp }}</p>
 -->
+
+    <p class="text-info">Pressure: {{ pressure|floatformat:2 }}</p>
+    <p class="text-info">Humidity: {{ humidity|floatformat:2 }}</p>
+
     <i>(refreshing every 2 seconds)</i>
 
     <br><br>
