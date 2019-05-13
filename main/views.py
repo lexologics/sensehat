@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+import os
+
 #from django.http import HttpResponse
 #from sense_hat import SenseHat
 
@@ -41,11 +43,23 @@ def homepage(request):
 def sensors(request):
 
     from sense_hat import SenseHat
+    import os
 
+    # RPi CPU
+    pitemp = os.popen("vcgencmd measure_temp").readline()
+    pitemp = pitemp.replace("temp=", "")
     sense = SenseHat()
     temp = sense.get_temperature()
     pressure = sense.get_pressure()
     humidity = sense.get_humidity()
+    get_mem_arm = os.popen("vcgencmd get_mem arm").readline()
+    get_mem_gpu = os.popen("vcgencmd get_mem gpu").readline()
+
+    measure_volts_core = os.popen("vcgencmd measure_volts core").readline()
+    measure_volts_sdram_c = os.popen("vcgencmd measure_volts sdram_c").readline()
+    measure_volts_sdram_i = os.popen("vcgencmd measure_volts sdram_i").readline()
+    measure_volts_sdram_p = os.popen("vcgencmd measure_volts sdram_p").readline()
+    
     #print("Temperature: %s C" % temp)
 
     # alternatives
@@ -53,10 +67,19 @@ def sensors(request):
     #print(sense.temperature)
 
     context = {
+        'pitemp': pitemp,
         'temp': temp,
         'sense': sense,
         'pressure': pressure,
         'humidity': humidity,
+        'get_mem_arm': get_mem_arm,
+        'get_mem_gpu': get_mem_gpu,
+
+        'measure_volts_core': measure_volts_core,
+        'measure_volts_sdram_c': measure_volts_sdram_c,
+        'measure_volts_sdram_i': measure_volts_sdram_i,
+        'measure_volts_sdram_p':  measure_volts_sdram_p,
+        
         'title': 'Temperature'
         }
     return render(request, 'main/sensors.html', context)

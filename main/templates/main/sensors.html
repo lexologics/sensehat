@@ -2,33 +2,45 @@
 
 {% block content %}
 
-    <h1>Raspberry Pi 3B+ CPU Sensors</h1>
-    {% if temp > 37.25 %}
-      <h3> 
-      <p class="text-danger">Celsius: {{ temp|floatformat:3 }}</p>
-      </h3>
+
+    <h3>Raspberry Pi 3B+</h3>
+    {% if pitemp > '60' %}
+      <p class="text-danger">CPU Temperature: {{ pitemp }}</p>
     {% else %}
-      <h3>
-      <p class="text-success">Celsius: {{ temp|floatformat:3 }}</p>
-      </h3>
+        <p class="text-success">CPU Temperature: {{ pitemp }}</p>
+    {% endif %}
+    
+    <b>Memory:</b><br>
+    Processor: {{ get_mem_arm }}<br>
+    GPU: {{ get_mem_gpu }}<br><br>
+
+    <b>Core and SDRAM Volts</b><br>
+      Core: {{ measure_volts_core }}<br><br>
+      c: {{ measure_volts_sdram_c }} <br>
+      i: {{ measure_volts_sdram_i }} <br>
+      p: {{ measure_volts_sdram_p }} <br>
+    </p>
+    
+    <hr>
+
+    <h3>Sense Hat Sensors</h3>
+    {% if temp > 37.25 %}
+      <p class="text-danger">Temperature: {{ temp|floatformat:1 }}'C<br>
+    {% else %}
+      <p class="text-success">Temperature: {{ temp|floatformat:1 }}'C<br>
     {% endif %}
 
-<!--    
-    <p>Sensor: {{ sense.temperature }}</p>
-    <p>{{ sense.temp }}</p>
--->
+    Pressure: {{ pressure|floatformat:2 }}<br>
+    Humidity: {{ humidity|floatformat:1 }}
 
-    <p class="text-muted">Pressure: {{ pressure|floatformat:2 }}</p>
-    <p class="text-muted">Humidity: {{ humidity|floatformat:1 }}</p>
-
-    <i>(refreshing every 2 seconds)</i>
-
-    <br><br>
     <hr>
-    
+
+    <i>(refreshing every 2 seconds)</i>    
+
+    <hr>
+
     <a href="/rgb/">Click Here</a>: and my LEDs will blink:) Thanks!
     <br>
     <a href="https://github.com/lexologics/sensehat">source code</a>
-    <hr>
     
 {% endblock %}
