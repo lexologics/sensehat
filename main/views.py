@@ -1,9 +1,19 @@
-from django.shortcuts import render
+from django.contrib.auth import get_user_model
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 import os
 
 #from django.http import HttpResponse
 #from sense_hat import SenseHat
+
+User = get_user_model()
 
 p = (204, 0, 204)  # pink
 g = (0, 102, 102)  # Green
@@ -189,4 +199,65 @@ def walking(request):
     sense.clear()
 
     return render(request, 'main/walking.html')
+
+# JavaScript Graph
+def get_data(request, *args, **kwargs):
+    data = {
+        'sales': 100,
+        'customers': 10,
+        }
+    return JsonResponse(data)
+
+# REST Framework
+class ChartData(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, format=None):
+        data = {
+            'sales': 100,
+            'customers': 10,
+            'users': User.objects.all().count(),
+        }
+        return Response(data)
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('main:sensors')
+        else:
+            for msg in form.error_messages:
+                print(form.error_messages[msg])
+
+    form = UserCreationForm
+    return render(request, 'main/register.html', context={'form':form})
+
+def logout_request(request):
+    logout(request)
+    messages.info(request, 'Logged out successfully!')
+    return redirect('main:sensors')
+
+def login_request(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+                messages.info(request, 'You are now logged in as {username}')
+                return redirect('main:sensors')
+            else:
+                messages.error(request, 'Invalid username or password')
+        else:
+            messages.error(request, 'Invalid username or password')
+
+    form = AuthenticationForm()
+    return render(request, 'main/login.html', {'form':form})
+
 

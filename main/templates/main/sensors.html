@@ -3,11 +3,11 @@
 {% block content %}
 
 
-    <h3>Raspberry Pi 3B+</h3>
+    <h3>Raspberry Pi 3B+ Sensors</h3>
     {% if pitemp > '60' %}
-      <p class="text-danger">CPU Temperature: {{ pitemp }}</p>
+      <h3><p class="text-danger">RPi 3 - CPU Temperature: {{ pitemp }}</p></h3>
     {% else %}
-        <p class="text-success">CPU Temperature: {{ pitemp }}</p>
+        <h3><p class="text-success">RPi 3 - CPU Temperature: {{ pitemp }}</p></h3>
     {% endif %}
     
     <b>Memory:</b><br>
@@ -39,8 +39,8 @@
 
     <hr>
 
-    <a href="/rgb/">Click Here</a>: and my LEDs will blink:) Thanks!
-    <br>
-    <a href="https://github.com/lexologics/sensehat">source code</a>
+      <a href="/rgb/">Click Here</a>: and my LEDs will blink:) Thanks!</a>
+    <hr>
+    <a href="https://github.com/lexologics/sensehat">source code (will be updated soon!)</a>
     
 {% endblock %}
