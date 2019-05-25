@@ -15,6 +15,9 @@
 </head>
 
 <body>
+
+
+
   <div class="container">
     <hr>
     <a href="/">Home</a> |
@@ -30,9 +33,20 @@
         <a href="/login/">Login</a> | 
         Welcome <b style="color:orange">Friend</b>
     {% endif %}
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}  
+    {% endif %}
+    
     <hr>
     {% block content %}{% endblock %}
     
+    <hr>
+
+    <small class="text-muted">2019 - Lexologics (IoT) - Python / Django</small>
   </div>
 
   <!-- Optional JavaScript -->

@@ -4,6 +4,8 @@
 
 
     <h3>Raspberry Pi 3B+ Sensors</h3>
+        <div class="row">
+      <div class="col">
     {% if pitemp > '60' %}
       <h3><p class="text-danger">RPi 3 - CPU Temperature: {{ pitemp }}</p></h3>
     {% else %}
@@ -23,24 +25,59 @@
     
     <hr>
 
-    <h3>Sense Hat Sensors</h3>
-    {% if temp > 37.25 %}
-      <p class="text-danger">Temperature: {{ temp|floatformat:1 }}'C<br>
-    {% else %}
-      <p class="text-success">Temperature: {{ temp|floatformat:1 }}'C<br>
-    {% endif %}
 
-    Pressure: {{ pressure|floatformat:2 }}<br>
-    Humidity: {{ humidity|floatformat:1 }}
+        <h3>Sense Hat Sensors</h3>
+        
+        {% if temp > 37.25 %}
+          <h3><p class="text-danger">Temperature: {{ temp|floatformat:1 }}'C</h3>
+        {% else %}
+          <h3><p class="text-success">Temperature: {{ temp|floatformat:1 }}'C</h3>
+        {% endif %}
+        </p>
+        
+        Pressure: {{ pressure|floatformat:2 }}<br>
+        Humidity: {{ humidity|floatformat:1 }}<br>
+        <br>
+            {% if user.is_authenticated %}
+                <hr>
+                <a class="btn btn-success" href="/create/">Save Sensor Values</a>
+                <br>
+                <br>
+            {% endif %}
+<hr>
+            <a class="btn btn-success" href="/create/">Save Sensor Values</a>
 
-    <hr>
+<b style="color:red">Only <i style="color:green">this weekend</i> **FREE** CPU saves ;)</b>
 
-    <i>(refreshing every 2 seconds)</i>    
+<br><br>               
+        <i>(refreshing every 2 seconds)</i>
 
-    <hr>
+      </div>
+      <div class="col">
+        <h3><p style="color:orange">Sense Hat - CPU Temp:</p></h3>
+        {% for s in sensor %}
+
+<!--          {{ s.title }} :  -->
+          {% if s.sensor_data >= 38.7 %}
+            <i style="color:red">{{ s.sensor_data|floatformat:2 }}'C</i> |
+          {% else %}
+            <i style="color:green">{{ s.sensor_data|floatformat:2 }}'C</i> |
+          {% endif %}
+          
+          <small class="text-muted">{{ s.date_posted }}</small>
+          ({{ s.author }})
+          <br>
+        {% endfor %}
+      </div>
+    </div>
+
+        
+
+<!--    <hr>  -->
 
 <!--      <a href="/rgb/">Click Here</a>: and my LEDs will blink:) Thanks!</a> -->
 <!--    <hr>  -->
-    <a href="https://github.com/lexologics/sensehat">source code</a>
+
+<!--    <a href="https://github.com/lexologics/sensehat">source code</a>  -->
     
 {% endblock %}

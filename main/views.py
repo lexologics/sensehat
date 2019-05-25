@@ -4,9 +4,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from django.views.generic import ListView
+
+from .models import SensorHeat
+from django.contrib.auth.models import User
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+from sense_hat import SenseHat
 
 import os
 
@@ -50,6 +56,16 @@ PET2 = [
 def homepage(request):
     return render(request, 'main/home.html')
 
+def save_sensors(request):
+    user = User.objects.get(id=3)
+    sense = SenseHat()
+    
+    sensor = sense.get_temperature()
+    title = 'Sense Hat - CPU Temp'
+    create_record = SensorHeat(title=title, sensor_data=sensor, author_id=user.id)
+    create_record.save()
+    return redirect('/sensors/', {'user': user, "title": title})
+
 def sensors(request):
 
     from sense_hat import SenseHat
@@ -69,6 +85,8 @@ def sensors(request):
     measure_volts_sdram_c = os.popen("vcgencmd measure_volts sdram_c").readline()
     measure_volts_sdram_i = os.popen("vcgencmd measure_volts sdram_i").readline()
     measure_volts_sdram_p = os.popen("vcgencmd measure_volts sdram_p").readline()
+
+    sensor = SensorHeat.objects.all().order_by('-date_posted')
     
     #print("Temperature: %s C" % temp)
 
@@ -89,10 +107,18 @@ def sensors(request):
         'measure_volts_sdram_c': measure_volts_sdram_c,
         'measure_volts_sdram_i': measure_volts_sdram_i,
         'measure_volts_sdram_p':  measure_volts_sdram_p,
+
+        'sensor': sensor,
         
         'title': 'Temperature'
         }
     return render(request, 'main/sensors.html', context)
+
+#class SensorHeatListView(ListView):
+#    model = SensorHeat
+#    template_name = 'main/sensors.html'
+#    context_object_name = 'sensor'#
+#    ordering = ['-date_posted']
 
 def rgbmod(request):
 
@@ -250,7 +276,7 @@ def login_request(request):
 
             if user is not None:
                 login(request, user)
-                messages.info(request, 'You are now logged in as {username}')
+                messages.info(request, 'You are now logged in as {user}')
                 return redirect('main:sensors')
             else:
                 messages.error(request, 'Invalid username or password')
