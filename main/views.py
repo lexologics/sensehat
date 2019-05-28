@@ -278,7 +278,7 @@ def register(request):
 def logout_request(request):
     logout(request)
     messages.info(request, 'Logged out successfully!')
-    return redirect('main:sensors')
+    return redirect('main:homepage')
 
 def login_request(request):
     if request.method == 'POST':
@@ -291,7 +291,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, 'You are now logged in as {user}')
-                return redirect('main:sensors')
+                return redirect('main:homepage')
             else:
                 messages.error(request, 'Invalid username or password')
         else:

@@ -4,26 +4,27 @@
 
 
     <h3>Raspberry Pi 3B+ Sensors</h3>
-        <div class="row">
-      <div class="col">
-    {% if pitemp > '60' %}
-      <h3><p class="text-danger">RPi 3 - CPU Temperature: {{ pitemp }}</p></h3>
-    {% else %}
-        <h3><p class="text-success">RPi 3 - CPU Temperature: {{ pitemp }}</p></h3>
-    {% endif %}
-    
-    <b>Memory:</b><br>
-    Processor: {{ get_mem_arm }}<br>
-    GPU: {{ get_mem_gpu }}<br><br>
 
-    <b>Core and SDRAM Volts</b><br>
-      Core: {{ measure_volts_core }}<br><br>
-      c: {{ measure_volts_sdram_c }} <br>
-      i: {{ measure_volts_sdram_i }} <br>
-      p: {{ measure_volts_sdram_p }} <br>
-    </p>
+    <div class="row">
+      <div class="col">
+	    {% if pitemp > '60' %}
+	      <h3><p class="text-danger">RPi 3 - CPU Temperature: {{ pitemp }}</p></h3>
+	    {% else %}
+		<h3><p class="text-success">RPi 3 - CPU Temperature: {{ pitemp }}</p></h3>
+	    {% endif %}
+	    
+	    <b>Memory:</b><br>
+	    Processor: {{ get_mem_arm }}<br>
+	    GPU: {{ get_mem_gpu }}<br><br>
+
+	    <b>Core and SDRAM Volts</b><br>
+	      Core: {{ measure_volts_core }}<br><br>
+	      c: {{ measure_volts_sdram_c }} <br>
+	      i: {{ measure_volts_sdram_i }} <br>
+	      p: {{ measure_volts_sdram_p }} <br>
+	    </p>
     
-    <hr>
+	    <hr>
 
 
         <h3>Sense Hat Sensors</h3>

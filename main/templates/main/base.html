@@ -85,17 +85,21 @@
         <a class="button" href="/rgb/">RGB Module</a>
         <a class="button" href="/walking/">Walking Pet</a>
         <a class="button" href="/show_text/">Show Text</a>
+<!--
 	<div class="pull-right">
             <b>Welcome</b> <b style="color:red; text-transform: uppercase;">{{ user }}</b>
 	</div>
+-->
 	<div class="pull-right">
             <a class="button" href="/logout/">Logout</a>
 	</div>
 
     {% else %}
+<!--
 	<div class="pull-right">
             <br><br>Welcome <b style="color:orange">Friend</b>
 	</div>
+-->
 	<div class="pull-right">	  
             <a class="button" href="/login/">Login</a>
 	</div>
@@ -120,8 +124,7 @@
     
     <hr>
 
-    <a class="btn btn-success" href="https://github.com/lexologics/sensehat">source code</a>
-
+    <a class="btn btn-success" href="https://github.com/lexologics/sensehat" target="_newwin">source code</a>
     
   </div>
 
@@ -130,12 +133,19 @@
       <ul>
         <hr>
         <li><small class="text-muted">2019 - Lexologics (IoT) - Python / Django</small></li>
-        <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
-        <li><a href="#"><i class="fab fa-youtube-square"></i></a></li>
-        <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
+        <li><a href="https://www.facebook.com" target="_newwin"><i class="fab fa-facebook-square"></i></a></li>
+        <li><a href="https://www.youtube.com/lexologics" target="_newwin"><i class="fab fa-youtube-square"></i></a></li>
+        <li><a href="https://www.instagram.com/" target="_newwin"><i class="fab fa-twitter-square"></i></a></li>
+    {% if user.is_authenticated %}
+	<li class="pull-right"><b>Welcome</b> <b style="color:red; text-transform: uppercase;">{{ user }}</b></li>
+    {% else %}
+	<li class="pull-right"><b>Welcome</b> <b style="color:orange; text-transform: uppercase">Friend</b></li>
+    {% endif %}
+
       </ul>
     </footer>
   </div>
+
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
