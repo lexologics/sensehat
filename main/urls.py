@@ -14,6 +14,7 @@ urlpatterns = [
     path('login/', views.login_request, name='login'),
     path('logout/', views.logout_request, name='logout'),
     path('create/', views.save_sensors, name='save_sensors'),
+    path('show_text/', views.show_text, name='show_text'),
     path('api/data/', views.get_data, name='get_data'),
     path('api/', views.ChartData.as_view()),
 ]

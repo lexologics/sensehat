@@ -1,13 +1,20 @@
+<!DOCTYPE html>
+
+{% load static %}
+
 <html>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css">
+    <link rel="stylesheet" href="{% static "main/css/main.css"  %}">
     {% if title %}
-      <meta http-equiv="refresh" content="2">
+      <meta http-equiv="refresh" content="3">
       <title>Sense Hat {{ title }}</title>
     {% else %}
       <title>Sense Hat</title>
@@ -16,39 +23,119 @@
 
 <body>
 
+<!--
+  <header>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2">
+          <a href="#"><img src="logo.png" class="logo"></a>
+          <a href="#" id="menu-toggle"><img src="menu.png"></a>
+        </div>
+        <div class="col-md-5">
+          <form><input placeholder="Type to search..." type="text"></form>
+        </div>
+        <div class="col-md-5">
+          <ul class="user-info">
+            <li><a href="#" class="button">Upload</a></li>
+            <li>
+              <ul class="notifications">
+                <li><i class="fa fa-envelope"></i><span>1</span></li>
+                <li><i class="fa fa-fa-bell"></i><span>3</span></li>
+              </ul>
+            </li>
+            <li>
+              <img src="">
+              <div>
+                <p class="username">A.P. Boerhoop</p>
+                <p>9 Subscribers</p>
+                <a href="#">Log out</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
 
+  <div class="container-fluid">
+    <div class="row">
+      <ul class="tabs">
+        <li class="active">Home</li>
+        <li>Trending</li>
+        <li>Subscriptions</li>
+      </ul>
+    </div>
+  </div>
 
+  <hr>
+
+-->
   <div class="container">
-    <hr>
-    <a href="/">Home</a> |
-    <a href="/sensors/">Sensors</a> |
-    {% if user.is_authenticated %}         
-        <a href="/rgb/">RGB Module</a> |
-        <a href="/walking/">Walking Pet</a> | 
-        <a href="/logout/">Logout</a> |
-        <b>Welcome</b> <b style="color:red; text-transform: uppercase;">{{ user }}</b>
+    <br>
+    <a class="button" href="/">Home</a>
+
+    <a class="button" href="/sensors/">Sensors</a>
+<!--        <a class="button" href="/rgb/">RGB Module</a>
+        <a class="button" href="/walking/">Walking Pet</a>
+-->
+    
+    
+    {% if user.is_authenticated %}
+        <!-- <a class="button" href="/sensors/">Sensors</a>  -->
+        <a class="button" href="/rgb/">RGB Module</a>
+        <a class="button" href="/walking/">Walking Pet</a>
+        <a class="button" href="/show_text/">Show Text</a>
+	<div class="pull-right">
+            <b>Welcome</b> <b style="color:red; text-transform: uppercase;">{{ user }}</b>
+	</div>
+	<div class="pull-right">
+            <a class="button" href="/logout/">Logout</a>
+	</div>
 
     {% else %}
-        <a href="/register/">Register</a> |
-        <a href="/login/">Login</a> | 
-        Welcome <b style="color:orange">Friend</b>
+	<div class="pull-right">
+            <br><br>Welcome <b style="color:orange">Friend</b>
+	</div>
+	<div class="pull-right">	  
+            <a class="button" href="/login/">Login</a>
+	</div>
+	<div class="pull-right">
+            <a class="button" href="/register/">Register</a>
+	</div>
     {% endif %}
 
     {% if messages %}
       <ul class="messages">
         {% for message in messages %}
           <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}  
+        {% endfor %}
+      </ul>  
     {% endif %}
-    
+    <br>
+    <br>
+
     <hr>
+
     {% block content %}{% endblock %}
     
     <hr>
 
-    <small class="text-muted">2019 - Lexologics (IoT) - Python / Django</small>
+    <a class="btn btn-success" href="https://github.com/lexologics/sensehat">source code</a>
+
+    
   </div>
 
+  <div class="container">
+    <footer>
+      <ul>
+        <hr>
+        <li><small class="text-muted">2019 - Lexologics (IoT) - Python / Django</small></li>
+        <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+        <li><a href="#"><i class="fab fa-youtube-square"></i></a></li>
+        <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
+      </ul>
+    </footer>
+  </div>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -57,3 +144,4 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"</script>
 </body>
 </html>
+

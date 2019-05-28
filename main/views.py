@@ -4,10 +4,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 
 from .models import SensorHeat
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -56,7 +57,17 @@ PET2 = [
 def homepage(request):
     return render(request, 'main/home.html')
 
+
+#class ShowTextView(TemplateView):
+#    template_name = 'show_text.html'
+#    @method_decorator(login_required)    
+#    return render(request, 'main/show_text.html')
+
+def show_text(request):
+    return render(request, 'main/show_text.html')
+
 def save_sensors(request):
+    #@login_required
     user = User.objects.get(id=3)
     sense = SenseHat()
     
@@ -120,6 +131,7 @@ def sensors(request):
 #    context_object_name = 'sensor'#
 #    ordering = ['-date_posted']
 
+#@login_required
 def rgbmod(request):
 
     from sense_hat import SenseHat
@@ -136,47 +148,47 @@ def rgbmod(request):
     e = (0, 0,0 )     # Empty
 
     pet1 = [
-        e, e, e, e, e, e, e, e,
-        p, e, e, e, e, e, e, e,
-        e, p, e, e, p, e, p, e,
-        e, p, g, g, p, y, y, e,
-        e, g, g, g, y, w, y, g,
-        e, g, g, g, g, y, y, e,
-        e, g, e, g, e, g, e, e,
-        e, e, e, e, e, e, e, e
+	e, e, e, e, e, e, e, e,
+	p, e, e, e, e, e, e, e,
+	e, p, e, e, p, e, p, e,
+	e, p, g, g, p, y, y, e,
+	e, g, g, g, y, w, y, g,
+	e, g, g, g, g, y, y, e,
+	e, g, e, g, e, g, e, e,
+	e, e, e, e, e, e, e, e
     ]
 
     pet2 = [
-        e, e, e, e, e, e, e, e,
-        p, e, e, e, e, e, e, e,
-        e, p, e, e, p, e, p, e,
-        e, p, g, g, p, y, y, e,
-        e, g, g, g, y, w, y, g,
-        e, g, g, g, g, y, y, e,
-        e, e, g, e, g, e, e, e,
-        e, e, e, e, e, e, e, e
+	e, e, e, e, e, e, e, e,
+	p, e, e, e, e, e, e, e,
+	e, p, e, e, p, e, p, e,
+	e, p, g, g, p, y, y, e,
+	e, g, g, g, y, w, y, g,
+	e, g, g, g, g, y, y, e,
+	e, e, g, e, g, e, e, e,
+	e, e, e, e, e, e, e, e
     ]
 
     love = [
-        e,e,e,e,e,e,e,e,
-        e,r,r,e,e,r,r,e,
-        r,r,r,r,r,r,r,r,
-        r,r,r,r,r,r,r,r,
-        e,r,r,r,r,r,r,e,
-        e,e,r,r,r,r,e,e,
-        e,e,e,r,r,e,e,e,
-        e,e,e,e,e,e,e,e
+	e,e,e,e,e,e,e,e,
+	e,r,r,e,e,r,r,e,
+	r,r,r,r,r,r,r,r,
+	r,r,r,r,r,r,r,r,
+	e,r,r,r,r,r,r,e,
+	e,e,r,r,r,r,e,e,
+	e,e,e,r,r,e,e,e,
+	e,e,e,e,e,e,e,e
     ]
 
     pacman = [
-        e,e,y,y,y,y,e,e,
-        e,y,y,y,y,y,y,e,
-        y,y,y,y,y,y,y,y,
-        y,y,y,y,y,y,e,e,
-        y,y,y,y,y,y,e,e,
-        y,y,y,y,y,y,y,y,
-        e,y,y,y,y,y,y,e,
-        e,e,y,y,y,y,e,e
+	e,e,y,y,y,y,e,e,
+	e,y,y,y,y,y,y,e,
+	y,y,y,y,y,y,y,y,
+	y,y,y,y,y,y,e,e,
+	y,y,y,y,y,y,e,e,
+	y,y,y,y,y,y,y,y,
+	e,y,y,y,y,y,y,e,
+	e,e,y,y,y,y,e,e
     ]
 
 #    pacman2 = [
@@ -205,7 +217,7 @@ def rgbmod(request):
 
     return render(request, 'main/rgb.html')
 
-
+#@login_required
 def walking(request):
     
     from sense_hat import SenseHat
@@ -235,6 +247,7 @@ def get_data(request, *args, **kwargs):
     return JsonResponse(data)
 
 # REST Framework
+#@login_required
 class ChartData(APIView):
     authentication_classes = []
     permission_classes = []
@@ -261,6 +274,7 @@ def register(request):
     form = UserCreationForm
     return render(request, 'main/register.html', context={'form':form})
 
+#@login_required
 def logout_request(request):
     logout(request)
     messages.info(request, 'Logged out successfully!')

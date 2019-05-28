@@ -44,13 +44,15 @@
                 <br>
                 <br>
             {% endif %}
+<!--
 <hr>
             <a class="btn btn-success" href="/create/">Save Sensor Values</a>
 
 <b style="color:red">Only <i style="color:green">this weekend</i> **FREE** CPU saves ;)</b>
+-->
 
-<br><br>               
-        <i>(refreshing every 2 seconds)</i>
+              
+        <i>(refreshing every 3 seconds)</i>
 
       </div>
       <div class="col">
@@ -59,15 +61,16 @@
 
 <!--          {{ s.title }} :  -->
           {% if s.sensor_data >= 38.7 %}
-            <i style="color:red">{{ s.sensor_data|floatformat:2 }}'C</i> |
+            <i style="color:red">{{ s.sensor_data|floatformat:1 }}'C</i> |
           {% else %}
-            <i style="color:green">{{ s.sensor_data|floatformat:2 }}'C</i> |
+            <i style="color:green">{{ s.sensor_data|floatformat:1 }}'C</i> |
           {% endif %}
           
           <small class="text-muted">{{ s.date_posted }}</small>
           ({{ s.author }})
           <br>
         {% endfor %}
+
       </div>
     </div>
 
